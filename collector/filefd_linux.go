@@ -57,7 +57,7 @@ func (c *fileFDStatCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.NewDesc(
 				prometheus.BuildFQName(namespace, fileFDStatSubsystem, name),
 				fmt.Sprintf("File descriptor statistics: %s.", name),
-				nil, nil,
+				nil, constLabels,
 			),
 			prometheus.GaugeValue, v,
 		)

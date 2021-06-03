@@ -91,7 +91,7 @@ func (c *execCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.NewDesc(
 				namespace+"_"+m.name,
 				m.description,
-				nil, nil,
+				nil, constLabels,
 			), prometheus.CounterValue, v)
 	}
 

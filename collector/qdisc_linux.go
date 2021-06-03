@@ -51,37 +51,37 @@ func NewQdiscStatCollector(logger log.Logger) (Collector, error) {
 		bytes: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "qdisc", "bytes_total"),
 			"Number of bytes sent.",
-			[]string{"device", "kind"}, nil,
+			[]string{"device", "kind"}, constLabels,
 		), prometheus.CounterValue},
 		packets: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "qdisc", "packets_total"),
 			"Number of packets sent.",
-			[]string{"device", "kind"}, nil,
+			[]string{"device", "kind"}, constLabels,
 		), prometheus.CounterValue},
 		drops: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "qdisc", "drops_total"),
 			"Number of packets dropped.",
-			[]string{"device", "kind"}, nil,
+			[]string{"device", "kind"}, constLabels,
 		), prometheus.CounterValue},
 		requeues: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "qdisc", "requeues_total"),
 			"Number of packets dequeued, not transmitted, and requeued.",
-			[]string{"device", "kind"}, nil,
+			[]string{"device", "kind"}, constLabels,
 		), prometheus.CounterValue},
 		overlimits: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "qdisc", "overlimits_total"),
 			"Number of overlimit packets.",
-			[]string{"device", "kind"}, nil,
+			[]string{"device", "kind"}, constLabels,
 		), prometheus.CounterValue},
 		qlength: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "qdisc", "current_queue_length"),
 			"Number of packets currently in queue to be sent.",
-			[]string{"device", "kind"}, nil,
+			[]string{"device", "kind"}, constLabels,
 		), prometheus.GaugeValue},
 		backlog: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "qdisc", "backlog"),
 			"Number of bytes currently in queue to be sent.",
-			[]string{"device", "kind"}, nil,
+			[]string{"device", "kind"}, constLabels,
 		), prometheus.GaugeValue},
 		logger: logger,
 	}, nil

@@ -33,21 +33,21 @@ var (
 		prometheus.BuildFQName(namespace, "schedstat", "running_seconds_total"),
 		"Number of seconds CPU spent running a process.",
 		[]string{"cpu"},
-		nil,
+		constLabels,
 	)
 
 	waitingSecondsTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "schedstat", "waiting_seconds_total"),
 		"Number of seconds spent by processing waiting for this CPU.",
 		[]string{"cpu"},
-		nil,
+		constLabels,
 	)
 
 	timeslicesTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "schedstat", "timeslices_total"),
 		"Number of timeslices executed by CPU.",
 		[]string{"cpu"},
-		nil,
+		constLabels,
 	)
 )
 

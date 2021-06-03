@@ -92,7 +92,7 @@ func (c *netStatCollector) Update(ch chan<- prometheus.Metric) error {
 				prometheus.NewDesc(
 					prometheus.BuildFQName(namespace, netStatsSubsystem, key),
 					fmt.Sprintf("Statistic %s.", protocol+name),
-					nil, nil,
+					nil, constlabels,
 				),
 				prometheus.UntypedValue, v,
 			)

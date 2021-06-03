@@ -54,23 +54,23 @@ func NewProcessStatCollector(logger log.Logger) (Collector, error) {
 		threadAlloc: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, subsystem, "threads"),
 			"Allocated threads in system",
-			nil, nil,
+			nil, constLabels,
 		),
 		threadLimit: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, subsystem, "max_threads"),
 			"Limit of threads in the system",
-			nil, nil,
+			nil, constLabels,
 		),
 		procsState: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, subsystem, "state"),
 			"Number of processes in each state.",
-			[]string{"state"}, nil,
+			[]string{"state"}, constLabels,
 		),
 		pidUsed: prometheus.NewDesc(prometheus.BuildFQName(namespace, subsystem, "pids"),
-			"Number of PIDs", nil, nil,
+			"Number of PIDs", nil, constLabels,
 		),
 		pidMax: prometheus.NewDesc(prometheus.BuildFQName(namespace, subsystem, "max_processes"),
-			"Number of max PIDs limit", nil, nil,
+			"Number of max PIDs limit", nil, constLabels,
 		),
 		logger: logger,
 	}, nil

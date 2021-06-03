@@ -39,7 +39,7 @@ func NewTimeCollector(logger log.Logger) (Collector, error) {
 		desc: prometheus.NewDesc(
 			namespace+"_time_seconds",
 			"System time in seconds since epoch (1970).",
-			nil, nil,
+			nil, constLabels,
 		),
 		logger: logger,
 	}, nil

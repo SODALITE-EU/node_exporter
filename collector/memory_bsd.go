@@ -148,7 +148,7 @@ func (c *memoryCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.NewDesc(
 				prometheus.BuildFQName(namespace, memorySubsystem, m.name),
 				m.description,
-				nil, nil,
+				nil, constLabels,
 			), m.valueType, v)
 	}
 
@@ -161,7 +161,7 @@ func (c *memoryCollector) Update(ch chan<- prometheus.Metric) error {
 		prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, memorySubsystem, "swap_used_bytes"),
 			"Currently allocated swap",
-			nil, nil,
+			nil, constLabels,
 		), prometheus.GaugeValue, float64(swapUsed*c.pageSize))
 
 	return nil

@@ -46,12 +46,12 @@ func NewEntropyCollector(logger log.Logger) (Collector, error) {
 		entropyAvail: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "entropy_available_bits"),
 			"Bits of available entropy.",
-			nil, nil,
+			nil, constLabels,
 		),
 		entropyPoolSize: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "entropy_pool_size_bits"),
 			"Bits of entropy pool.",
-			nil, nil,
+			nil, constLabels,
 		),
 		logger: logger,
 	}, nil

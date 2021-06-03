@@ -93,7 +93,7 @@ func NewInfiniBandCollector(logger log.Logger) (Collector, error) {
 			prometheus.BuildFQName(namespace, i.subsystem, metricName),
 			description,
 			[]string{"device", "port"},
-			nil,
+			constLabels,
 		)
 	}
 
@@ -125,7 +125,7 @@ func (c *infinibandCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.BuildFQName(namespace, c.subsystem, "info"),
 			"Non-numeric data from /sys/class/infiniband/<device>, value is always 1.",
 			[]string{"device", "board_id", "firmware_version", "hca_type"},
-			nil,
+			constLabels,
 		)
 		infoValue := 1.0
 		ch <- prometheus.MustNewConstMetric(infoDesc, prometheus.GaugeValue, infoValue, device.Name, device.BoardID, device.FirmwareVersion, device.HCAType)

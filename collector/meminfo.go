@@ -61,7 +61,7 @@ func (c *meminfoCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.NewDesc(
 				prometheus.BuildFQName(namespace, memInfoSubsystem, k),
 				fmt.Sprintf("Memory information field %s.", k),
-				nil, nil,
+				nil, constLabels,
 			),
 			metricType, v,
 		)

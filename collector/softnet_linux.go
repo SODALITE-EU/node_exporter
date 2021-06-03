@@ -52,17 +52,17 @@ func NewSoftnetCollector(logger log.Logger) (Collector, error) {
 		processed: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, softnetSubsystem, "processed_total"),
 			"Number of processed packets",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		dropped: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, softnetSubsystem, "dropped_total"),
 			"Number of dropped packets",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		timeSqueezed: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, softnetSubsystem, "times_squeezed_total"),
 			"Number of times processing packets ran out of quota",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		logger: logger,
 	}, nil

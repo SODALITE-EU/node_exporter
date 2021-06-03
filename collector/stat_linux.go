@@ -49,32 +49,32 @@ func NewStatCollector(logger log.Logger) (Collector, error) {
 		intr: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "intr_total"),
 			"Total number of interrupts serviced.",
-			nil, nil,
+			nil, constLabels,
 		),
 		ctxt: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "context_switches_total"),
 			"Total number of context switches.",
-			nil, nil,
+			nil, constLabels,
 		),
 		forks: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "forks_total"),
 			"Total number of forks.",
-			nil, nil,
+			nil, constLabels,
 		),
 		btime: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "boot_time_seconds"),
 			"Node boot time, in unixtime.",
-			nil, nil,
+			nil, constLabels,
 		),
 		procsRunning: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "procs_running"),
 			"Number of processes in runnable state.",
-			nil, nil,
+			nil, constLabels,
 		),
 		procsBlocked: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "procs_blocked"),
 			"Number of processes blocked waiting for I/O to complete.",
-			nil, nil,
+			nil, constLabels,
 		),
 		logger: logger,
 	}, nil

@@ -257,7 +257,7 @@ func (c *zfsCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.NewDesc(
 				prometheus.BuildFQName(namespace, zfsCollectorSubsystem, m.name),
 				m.description,
-				nil, nil,
+				nil, constLabels,
 			), m.valueType, v)
 	}
 

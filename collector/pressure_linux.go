@@ -58,27 +58,27 @@ func NewPressureStatsCollector(logger log.Logger) (Collector, error) {
 		cpu: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "pressure", "cpu_waiting_seconds_total"),
 			"Total time in seconds that processes have waited for CPU time",
-			nil, nil,
+			nil, constLabels,
 		),
 		io: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "pressure", "io_waiting_seconds_total"),
 			"Total time in seconds that processes have waited due to IO congestion",
-			nil, nil,
+			nil, constLabels,
 		),
 		ioFull: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "pressure", "io_stalled_seconds_total"),
 			"Total time in seconds no process could make progress due to IO congestion",
-			nil, nil,
+			nil, constLabels,
 		),
 		mem: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "pressure", "memory_waiting_seconds_total"),
 			"Total time in seconds that processes have waited for memory",
-			nil, nil,
+			nil, constLabels,
 		),
 		memFull: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "pressure", "memory_stalled_seconds_total"),
 			"Total time in seconds no process could make progress due to memory congestion",
-			nil, nil,
+			nil, constLabels,
 		),
 		fs:     fs,
 		logger: logger,

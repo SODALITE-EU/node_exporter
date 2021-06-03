@@ -36,7 +36,7 @@ func NewInterruptsCollector(logger log.Logger) (Collector, error) {
 		desc: typedDesc{prometheus.NewDesc(
 			namespace+"_interrupts_total",
 			"Interrupt details.",
-			interruptLabelNames, nil,
+			interruptLabelNames, constLabels,
 		), prometheus.CounterValue},
 		logger: logger,
 	}, nil

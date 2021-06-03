@@ -42,11 +42,11 @@ func NewNetworkRouteCollector(logger log.Logger) (Collector, error) {
 
 	routeInfoDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "route_info"),
-		"network routing table information", []string{"device", "src", "dest", "gw", "priority", "proto", "weight"}, nil,
+		"network routing table information", []string{"device", "src", "dest", "gw", "priority", "proto", "weight"}, constlabels,
 	)
 	routesDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "routes"),
-		"network routes by interface", []string{"device"}, nil,
+		"network routes by interface", []string{"device"}, constlabels,
 	)
 
 	return &networkRouteCollector{

@@ -43,12 +43,12 @@ func NewCpuFreqCollector(logger log.Logger) (Collector, error) {
 		cpuFreq: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "frequency_hertz"),
 			"Current CPU thread frequency in hertz.",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		cpuFreqMax: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "frequency_max_hertz"),
 			"Maximum CPU thread frequency in hertz.",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		logger: logger,
 	}, nil

@@ -110,17 +110,17 @@ func NewDevstatCollector(logger log.Logger) (Collector, error) {
 		bytesDesc: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, devstatSubsystem, "bytes_total"),
 			"The total number of bytes transferred for reads and writes on the device.",
-			[]string{"device"}, nil,
+			[]string{"device"}, constLabels,
 		),
 		transfersDesc: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, devstatSubsystem, "transfers_total"),
 			"The total number of transactions completed.",
-			[]string{"device"}, nil,
+			[]string{"device"}, constLabels,
 		),
 		blocksDesc: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, devstatSubsystem, "blocks_total"),
 			"The total number of bytes given in terms of the devices blocksize.",
-			[]string{"device"}, nil,
+			[]string{"device"}, constLabels,
 		),
 		logger: logger,
 	}, nil

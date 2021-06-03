@@ -36,7 +36,7 @@ type collectorAdapter struct {
 func (a collectorAdapter) Describe(ch chan<- *prometheus.Desc) {
 	// We have to send *some* metric in Describe, but we don't know which ones
 	// we're going to get, so just send a dummy metric.
-	ch <- prometheus.NewDesc("dummy_metric", "Dummy metric.", nil, nil)
+	ch <- prometheus.NewDesc("dummy_metric", "Dummy metric.", nil, constLabels)
 }
 
 // Collect implements the prometheus.Collector interface.

@@ -88,7 +88,7 @@ func NewFibreChannelCollector(logger log.Logger) (Collector, error) {
 			prometheus.BuildFQName(namespace, i.subsystem, metricName),
 			description,
 			[]string{"fc_host"},
-			nil,
+			constLabels,
 		)
 	}
 
@@ -121,7 +121,7 @@ func (c *fibrechannelCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.BuildFQName(namespace, c.subsystem, "info"),
 			"Non-numeric data from /sys/class/fc_host/<host>, value is always 1.",
 			[]string{"fc_host", "speed", "port_state", "port_type", "port_id", "port_name", "fabric_name", "symbolic_name", "supported_classes", "supported_speeds", "dev_loss_tmo"},
-			nil,
+			constLabels,
 		)
 		infoValue := 1.0
 

@@ -50,32 +50,32 @@ func NewCPUFreqCollector(logger log.Logger) (Collector, error) {
 		cpuFreq: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "frequency_hertz"),
 			"Current cpu thread frequency in hertz.",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		cpuFreqMin: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "frequency_min_hertz"),
 			"Minimum cpu thread frequency in hertz.",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		cpuFreqMax: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "frequency_max_hertz"),
 			"Maximum cpu thread frequency in hertz.",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		scalingFreq: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "scaling_frequency_hertz"),
 			"Current scaled CPU thread frequency in hertz.",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		scalingFreqMin: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "scaling_frequency_min_hertz"),
 			"Minimum scaled CPU thread frequency in hertz.",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		scalingFreqMax: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "scaling_frequency_max_hertz"),
 			"Maximum scaled CPU thread frequency in hertz.",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		),
 		logger: logger,
 	}, nil

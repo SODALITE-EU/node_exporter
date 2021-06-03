@@ -45,7 +45,7 @@ func NewBuddyinfoCollector(logger log.Logger) (Collector, error) {
 	desc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, buddyInfoSubsystem, "blocks"),
 		"Count of free blocks according to size.",
-		[]string{"node", "zone", "size"}, nil,
+		[]string{"node", "zone", "size"}, constLabels,
 	)
 	fs, err := procfs.NewFS(*procPath)
 	if err != nil {

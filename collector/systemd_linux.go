@@ -89,46 +89,52 @@ func NewSystemdCollector(logger log.Logger) (Collector, error) {
 
 	unitDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "unit_state"),
-		"Systemd unit", []string{"name", "state", "type"}, nil,
+		"Systemd unit", []string{"name", "state", "type"}, constLabels,
 	)
 	unitStartTimeDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "unit_start_time_seconds"),
-		"Start time of the unit since unix epoch in seconds.", []string{"name"}, nil,
+		"Start time of the unit since unix epoch in seconds.", []string{"name"}, constLabels,
 	)
 	unitTasksCurrentDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "unit_tasks_current"),
-		"Current number of tasks per Systemd unit", []string{"name"}, nil,
+		"Current number of tasks per Systemd unit", []string{"name"}, constLabels,
 	)
 	unitTasksMaxDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "unit_tasks_max"),
-		"Maximum number of tasks per Systemd unit", []string{"name"}, nil,
+		"Maximum number of tasks per Systemd unit", []string{"name"}, constLabels,
 	)
 	systemRunningDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "system_running"),
-		"Whether the system is operational (see 'systemctl is-system-running')",
-		nil, nil,
+		"Whether the system is operational (see 'systemctl is-system-running')", nil, constLabels,
 	)
 	summaryDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "units"),
-		"Summary of systemd unit states", []string{"state"}, nil)
+		"Summary of systemd unit states", []string{"state"}, constLabels,
+	)
 	nRestartsDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "service_restart_total"),
-		"Service unit count of Restart triggers", []string{"name"}, nil)
+		"Service unit count of Restart triggers", []string{"name"}, constLabels,
+	)
 	timerLastTriggerDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "timer_last_trigger_seconds"),
-		"Seconds since epoch of last trigger.", []string{"name"}, nil)
+		"Seconds since epoch of last trigger.", []string{"name"}, constLabels,
+	)
 	socketAcceptedConnectionsDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "socket_accepted_connections_total"),
-		"Total number of accepted socket connections", []string{"name"}, nil)
+		"Total number of accepted socket connections", []string{"name"}, constLabels,
+	)
 	socketCurrentConnectionsDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "socket_current_connections"),
-		"Current number of socket connections", []string{"name"}, nil)
+		"Current number of socket connections", []string{"name"}, constLabels,
+	)
 	socketRefusedConnectionsDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "socket_refused_connections_total"),
-		"Total number of refused socket connections", []string{"name"}, nil)
+		"Total number of refused socket connections", []string{"name"}, constLabels,
+	)
 	systemdVersionDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "version"),
-		"Detected systemd version", []string{}, nil)
+		"Detected systemd version", []string{}, constLabels,
+	)
 
 	if *oldUnitExclude != "" {
 		if !unitExcludeSet {

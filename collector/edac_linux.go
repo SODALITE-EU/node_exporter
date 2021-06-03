@@ -51,22 +51,22 @@ func NewEdacCollector(logger log.Logger) (Collector, error) {
 		ceCount: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, edacSubsystem, "correctable_errors_total"),
 			"Total correctable memory errors.",
-			[]string{"controller"}, nil,
+			[]string{"controller"}, constLabels,
 		),
 		ueCount: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, edacSubsystem, "uncorrectable_errors_total"),
 			"Total uncorrectable memory errors.",
-			[]string{"controller"}, nil,
+			[]string{"controller"}, constLabels,
 		),
 		csRowCECount: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, edacSubsystem, "csrow_correctable_errors_total"),
 			"Total correctable memory errors for this csrow.",
-			[]string{"controller", "csrow"}, nil,
+			[]string{"controller", "csrow"}, constLabels,
 		),
 		csRowUECount: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, edacSubsystem, "csrow_uncorrectable_errors_total"),
 			"Total uncorrectable memory errors for this csrow.",
-			[]string{"controller", "csrow"}, nil,
+			[]string{"controller", "csrow"}, constLabels,
 		),
 		logger: logger,
 	}, nil

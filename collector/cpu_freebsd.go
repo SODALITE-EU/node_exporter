@@ -98,7 +98,7 @@ func NewStatCollector(logger log.Logger) (Collector, error) {
 		temp: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "temperature_celsius"),
 			"CPU temperature",
-			[]string{"cpu"}, nil,
+			[]string{"cpu"}, constLabels,
 		), prometheus.GaugeValue},
 		logger: logger,
 	}, nil

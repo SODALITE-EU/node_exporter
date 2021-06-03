@@ -30,44 +30,44 @@ var (
 	readsCompletedDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, diskSubsystem, "reads_completed_total"),
 		"The total number of reads completed successfully.",
-		diskLabelNames, nil,
+		diskLabelNames, constLabels,
 	)
 
 	readBytesDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, diskSubsystem, "read_bytes_total"),
 		"The total number of bytes read successfully.",
-		diskLabelNames, nil,
+		diskLabelNames, constLabels,
 	)
 
 	writesCompletedDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, diskSubsystem, "writes_completed_total"),
 		"The total number of writes completed successfully.",
-		diskLabelNames, nil,
+		diskLabelNames, constLabels,
 	)
 
 	writtenBytesDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, diskSubsystem, "written_bytes_total"),
 		"The total number of bytes written successfully.",
-		diskLabelNames, nil,
+		diskLabelNames, constLabels,
 	)
 
 	ioTimeSecondsDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, diskSubsystem, "io_time_seconds_total"),
 		"Total seconds spent doing I/Os.",
-		diskLabelNames, nil,
+		diskLabelNames, constLabels,
 	)
 
 	readTimeSecondsDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, diskSubsystem, "read_time_seconds_total"),
 		"The total number of seconds spent by all reads.",
 		diskLabelNames,
-		nil,
+		constLabels,
 	)
 
 	writeTimeSecondsDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, diskSubsystem, "write_time_seconds_total"),
 		"This is the total number of seconds spent by all writes.",
 		diskLabelNames,
-		nil,
+		constLabels,
 	)
 )

@@ -32,7 +32,7 @@ var unameDesc = prometheus.NewDesc(
 		"nodename",
 		"domainname",
 	},
-	nil,
+	constLabels,
 )
 
 type unameCollector struct {

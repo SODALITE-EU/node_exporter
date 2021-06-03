@@ -50,17 +50,17 @@ func NewThermalZoneCollector(logger log.Logger) (Collector, error) {
 		zoneTemp: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, thermalZone, "temp"),
 			"Zone temperature in Celsius",
-			[]string{"zone", "type"}, nil,
+			[]string{"zone", "type"}, constLabels,
 		),
 		coolingDeviceCurState: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, coolingDevice, "cur_state"),
 			"Current throttle state of the cooling device",
-			[]string{"name", "type"}, nil,
+			[]string{"name", "type"}, constLabels,
 		),
 		coolingDeviceMaxState: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, coolingDevice, "max_state"),
 			"Maximum throttle state of the cooling device",
-			[]string{"name", "type"}, nil,
+			[]string{"name", "type"}, constLabels,
 		),
 		logger: logger,
 	}, nil

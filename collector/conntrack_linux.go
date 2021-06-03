@@ -41,12 +41,12 @@ func NewConntrackCollector(logger log.Logger) (Collector, error) {
 		current: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "nf_conntrack_entries"),
 			"Number of currently allocated flow entries for connection tracking.",
-			nil, nil,
+			nil, constLabels,
 		),
 		limit: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "nf_conntrack_entries_limit"),
 			"Maximum size of connection tracking table.",
-			nil, nil,
+			nil, constLabels,
 		),
 		logger: logger,
 	}, nil

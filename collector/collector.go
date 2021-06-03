@@ -29,18 +29,20 @@ import (
 // Namespace defines the common namespace to be used by all metrics.
 const namespace = "node"
 
+var constLabels = make(prometheus.Labels)
+
 var (
 	scrapeDurationDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "scrape", "collector_duration_seconds"),
 		"node_exporter: Duration of a collector scrape.",
 		[]string{"collector"},
-		nil,
+		constLabels,
 	)
 	scrapeSuccessDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "scrape", "collector_success"),
 		"node_exporter: Whether a collector succeeded.",
 		[]string{"collector"},
-		nil,
+		constLabels,
 	)
 )
 
@@ -102,7 +104,11 @@ func collectorFlagAction(collector string) func(ctx *kingpin.ParseContext) error
 }
 
 // NewNodeCollector creates a new NodeCollector.
-func NewNodeCollector(logger log.Logger, filters ...string) (*NodeCollector, error) {
+func NewNodeCollector(logger log.Logger, nameLabel, groupLabel string, filters ...string) (*NodeCollector, error) {
+
+	constLabels["instance_name"] = nameLabel
+	constLabels["group_name"] = groupLabel
+
 	f := make(map[string]bool)
 	for _, filter := range filters {
 		enabled, exist := collectorState[filter]
@@ -189,4 +195,15 @@ var ErrNoData = errors.New("collector returned no data")
 
 func IsNoDataError(err error) bool {
 	return err == ErrNoData
+}
+
+func joinLabels(map1 prometheus.Labels, map2 prometheus.Labels) prometheus.Labels {
+	map3 := make(prometheus.Labels)
+	for key, value := range map1 {
+		map3[key] = value
+	}
+	for key, value := range map2 {
+		map3[key] = value
+	}
+	return map3
 }

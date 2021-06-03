@@ -77,7 +77,7 @@ func (c *raplCollector) Update(ch chan<- prometheus.Metric) error {
 		descriptor := prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "rapl", rz.Name+"_joules_total"),
 			"Current RAPL "+rz.Name+" value in joules",
-			[]string{"index"}, nil,
+			[]string{"index"}, constLabels,
 		)
 
 		ch <- prometheus.MustNewConstMetric(

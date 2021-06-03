@@ -214,7 +214,7 @@ func newPerfTracepointCollector(
 			),
 			"Perf tracepoint "+tracepoint.tracepoint(),
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		)
 	}
 
@@ -315,7 +315,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of CPU cycles (frequency scaled)",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"instructions_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -325,7 +325,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of CPU instructions",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"branch_instructions_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -335,7 +335,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of CPU branch instructions",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"branch_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -345,7 +345,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of CPU branch misses",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_refs_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -355,7 +355,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of cache references (non frequency scaled)",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -365,7 +365,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of cache misses",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"ref_cpucycles_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -375,7 +375,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of CPU cycles",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"page_faults_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -385,7 +385,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of page faults",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"context_switches_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -395,7 +395,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of context switches",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cpu_migrations_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -405,7 +405,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of CPU process migrations",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"minor_faults_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -415,7 +415,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of minor page faults",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"major_faults_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -425,7 +425,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number of major page faults",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_l1d_read_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -435,7 +435,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number L1 data cache read hits",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_l1d_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -445,7 +445,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number L1 data cache read misses",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_l1d_write_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -455,7 +455,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number L1 data cache write hits",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_l1_instr_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -465,7 +465,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number instruction L1 instruction read misses",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_tlb_instr_read_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -475,7 +475,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number instruction TLB read hits",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_tlb_instr_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -485,7 +485,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number instruction TLB read misses",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_ll_read_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -495,7 +495,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number last level read hits",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_ll_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -505,7 +505,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number last level read misses",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_ll_write_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -515,7 +515,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number last level write hits",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_ll_write_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -525,7 +525,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number last level write misses",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_bpu_read_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -535,7 +535,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number BPU read hits",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 		"cache_bpu_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
@@ -545,7 +545,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 			),
 			"Number BPU read misses",
 			[]string{"cpu"},
-			nil,
+			constLabels,
 		),
 	}
 

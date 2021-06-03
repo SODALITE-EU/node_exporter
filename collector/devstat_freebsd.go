@@ -56,27 +56,27 @@ func NewDevstatCollector(logger log.Logger) (Collector, error) {
 		bytes: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, devstatSubsystem, "bytes_total"),
 			"The total number of bytes in transactions.",
-			[]string{"device", "type"}, nil,
+			[]string{"device", "type"}, constLabels,
 		), prometheus.CounterValue},
 		transfers: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, devstatSubsystem, "transfers_total"),
 			"The total number of transactions.",
-			[]string{"device", "type"}, nil,
+			[]string{"device", "type"}, constLabels,
 		), prometheus.CounterValue},
 		duration: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, devstatSubsystem, "duration_seconds_total"),
 			"The total duration of transactions in seconds.",
-			[]string{"device", "type"}, nil,
+			[]string{"device", "type"}, constLabels,
 		), prometheus.CounterValue},
 		busyTime: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, devstatSubsystem, "busy_time_seconds_total"),
 			"Total time the device had one or more transactions outstanding in seconds.",
-			[]string{"device"}, nil,
+			[]string{"device"}, constLabels,
 		), prometheus.CounterValue},
 		blocks: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, devstatSubsystem, "blocks_transferred_total"),
 			"The total number of blocks transferred.",
-			[]string{"device"}, nil,
+			[]string{"device"}, constLabels,
 		), prometheus.CounterValue},
 		logger: logger,
 	}, nil

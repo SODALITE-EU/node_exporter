@@ -41,7 +41,7 @@ func newDRBDNumericalMetric(name, desc string, valueType prometheus.ValueType, m
 			prometheus.BuildFQName(namespace, "drbd", name),
 			desc,
 			[]string{"device"},
-			nil,
+			constLabels,
 		),
 		valueType:  valueType,
 		multiplier: multiplier,
@@ -68,7 +68,7 @@ func newDRBDStringPairMetric(name, desc, valueOK string) drbdStringPairMetric {
 			prometheus.BuildFQName(namespace, "drbd", name),
 			desc,
 			[]string{"device", "node"},
-			nil,
+			constLabels,
 		),
 		valueOK: valueOK,
 	}
@@ -179,7 +179,7 @@ func newDRBDCollector(logger log.Logger) (Collector, error) {
 			prometheus.BuildFQName(namespace, "drbd", "connected"),
 			"Whether DRBD is connected to the peer.",
 			[]string{"device"},
-			nil,
+			constLabels,
 		),
 		logger: logger,
 	}, nil

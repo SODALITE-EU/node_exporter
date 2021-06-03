@@ -56,7 +56,7 @@ func NewKsmdCollector(logger log.Logger) (Collector, error) {
 	for _, n := range ksmdFiles {
 		descs[n] = prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, subsystem, getCanonicalMetricName(n)),
-			fmt.Sprintf("ksmd '%s' file.", n), nil, nil)
+			fmt.Sprintf("ksmd '%s' file.", n), nil, constLabels)
 	}
 	return &ksmdCollector{descs, logger}, nil
 }

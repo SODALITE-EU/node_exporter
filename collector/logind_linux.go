@@ -40,7 +40,7 @@ var (
 
 	sessionsDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, logindSubsystem, "sessions"),
-		"Number of sessions registered in logind.", []string{"seat", "remote", "type", "class"}, nil,
+		"Number of sessions registered in logind.", []string{"seat", "remote", "type", "class"}, constLabels,
 	)
 )
 

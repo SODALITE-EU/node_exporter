@@ -115,43 +115,43 @@ func NewFilesystemCollector(logger log.Logger) (Collector, error) {
 	sizeDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "size_bytes"),
 		"Filesystem size in bytes.",
-		filesystemLabelNames, nil,
+		filesystemLabelNames, constLabels,
 	)
 
 	freeDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "free_bytes"),
 		"Filesystem free space in bytes.",
-		filesystemLabelNames, nil,
+		filesystemLabelNames, constLabels,
 	)
 
 	availDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "avail_bytes"),
 		"Filesystem space available to non-root users in bytes.",
-		filesystemLabelNames, nil,
+		filesystemLabelNames, constLabels,
 	)
 
 	filesDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "files"),
 		"Filesystem total file nodes.",
-		filesystemLabelNames, nil,
+		filesystemLabelNames, constLabels,
 	)
 
 	filesFreeDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "files_free"),
 		"Filesystem total free file nodes.",
-		filesystemLabelNames, nil,
+		filesystemLabelNames, constLabels,
 	)
 
 	roDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "readonly"),
 		"Filesystem read-only status.",
-		filesystemLabelNames, nil,
+		filesystemLabelNames, constLabels,
 	)
 
 	deviceErrorDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "device_error"),
 		"Whether an error occurred while getting statistics for the given device.",
-		filesystemLabelNames, nil,
+		filesystemLabelNames, constLabels,
 	)
 
 	return &filesystemCollector{

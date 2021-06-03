@@ -37,9 +37,9 @@ func init() {
 func NewLoadavgCollector(logger log.Logger) (Collector, error) {
 	return &loadavgCollector{
 		metric: []typedDesc{
-			{prometheus.NewDesc(namespace+"_load1", "1m load average.", nil, nil), prometheus.GaugeValue},
-			{prometheus.NewDesc(namespace+"_load5", "5m load average.", nil, nil), prometheus.GaugeValue},
-			{prometheus.NewDesc(namespace+"_load15", "15m load average.", nil, nil), prometheus.GaugeValue},
+			{prometheus.NewDesc(namespace+"_load1", "1m load average.", nil, constLabels), prometheus.GaugeValue},
+			{prometheus.NewDesc(namespace+"_load5", "5m load average.", nil, constLabels), prometheus.GaugeValue},
+			{prometheus.NewDesc(namespace+"_load15", "15m load average.", nil, constLabels), prometheus.GaugeValue},
 		},
 		logger: logger,
 	}, nil

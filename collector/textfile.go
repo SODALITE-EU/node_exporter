@@ -38,7 +38,7 @@ var (
 		"node_textfile_mtime_seconds",
 		"Unixtime mtime of textfiles successfully read.",
 		[]string{"file"},
-		nil,
+		constLabels,
 	)
 )
 
@@ -127,7 +127,7 @@ func convertMetricFamily(metricFamily *dto.MetricFamily, ch chan<- prometheus.Me
 				prometheus.NewDesc(
 					*metricFamily.Name,
 					metricFamily.GetHelp(),
-					names, nil,
+					names, constLabels,
 				),
 				metric.Summary.GetSampleCount(),
 				metric.Summary.GetSampleSum(),
@@ -142,7 +142,7 @@ func convertMetricFamily(metricFamily *dto.MetricFamily, ch chan<- prometheus.Me
 				prometheus.NewDesc(
 					*metricFamily.Name,
 					metricFamily.GetHelp(),
-					names, nil,
+					names, constLabels,
 				),
 				metric.Histogram.GetSampleCount(),
 				metric.Histogram.GetSampleSum(),
@@ -156,7 +156,7 @@ func convertMetricFamily(metricFamily *dto.MetricFamily, ch chan<- prometheus.Me
 				prometheus.NewDesc(
 					*metricFamily.Name,
 					metricFamily.GetHelp(),
-					names, nil,
+					names, constLabels,
 				),
 				valType, val, values...,
 			)
@@ -225,7 +225,7 @@ func (c *textFileCollector) Update(ch chan<- prometheus.Metric) error {
 		prometheus.NewDesc(
 			"node_textfile_scrape_error",
 			"1 if there was an error opening or reading a file, 0 otherwise",
-			nil, nil,
+			nil, constLabels,
 		),
 		prometheus.GaugeValue, errVal,
 	)

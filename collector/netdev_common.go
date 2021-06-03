@@ -99,7 +99,7 @@ func (c *netDevCollector) Update(ch chan<- prometheus.Metric) error {
 					prometheus.BuildFQName(namespace, c.subsystem, key+"_total"),
 					fmt.Sprintf("Network device statistic %s.", key),
 					[]string{"device"},
-					nil,
+					constlabels,
 				)
 				c.metricDescs[key] = desc
 			}

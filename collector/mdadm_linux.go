@@ -44,59 +44,59 @@ var (
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		prometheus.Labels{"state": "active"},
+		joinLabels(prometheus.Labels{"state": "active"}, constLabels),
 	)
 	inActiveDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		prometheus.Labels{"state": "inactive"},
+		joinLabels(prometheus.Labels{"state": "inactive"}, constLabels),
 	)
 	recoveringDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		prometheus.Labels{"state": "recovering"},
+		joinLabels(prometheus.Labels{"state": "recovering"}, constLabels),
 	)
 	resyncDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		prometheus.Labels{"state": "resync"},
+		joinLabels(prometheus.Labels{"state": "resync"}, constLabels),
 	)
 	checkDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		prometheus.Labels{"state": "check"},
+		joinLabels(prometheus.Labels{"state": "check"}, constLabels),
 	)
 
 	disksDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "disks"),
 		"Number of active/failed/spare disks of device.",
 		[]string{"device", "state"},
-		nil,
+		constLabels,
 	)
 
 	disksTotalDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "disks_required"),
 		"Total number of disks of device.",
 		[]string{"device"},
-		nil,
+		constLabels,
 	)
 
 	blocksTotalDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "blocks"),
 		"Total number of blocks on device.",
 		[]string{"device"},
-		nil,
+		constLabels,
 	)
 
 	blocksSyncedDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "blocks_synced"),
 		"Number of blocks synced on device.",
 		[]string{"device"},
-		nil,
+		constLabels,
 	)
 )
 

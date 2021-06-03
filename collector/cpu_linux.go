@@ -68,32 +68,32 @@ func NewCPUCollector(logger log.Logger) (Collector, error) {
 		cpuInfo: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "info"),
 			"CPU information from /proc/cpuinfo.",
-			[]string{"package", "core", "cpu", "vendor", "family", "model", "model_name", "microcode", "stepping", "cachesize"}, nil,
+			[]string{"package", "core", "cpu", "vendor", "family", "model", "model_name", "microcode", "stepping", "cachesize"}, constLabels,
 		),
 		cpuFlagsInfo: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "flag_info"),
 			"The `flags` field of CPU information from /proc/cpuinfo.",
-			[]string{"flag"}, nil,
+			[]string{"flag"}, constLabels,
 		),
 		cpuBugsInfo: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "bug_info"),
 			"The `bugs` field of CPU information from /proc/cpuinfo.",
-			[]string{"bug"}, nil,
+			[]string{"bug"}, constLabels,
 		),
 		cpuGuest: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "guest_seconds_total"),
 			"Seconds the CPUs spent in guests (VMs) for each mode.",
-			[]string{"cpu", "mode"}, nil,
+			[]string{"cpu", "mode"}, constLabels,
 		),
 		cpuCoreThrottle: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "core_throttles_total"),
 			"Number of times this CPU core has been throttled.",
-			[]string{"package", "core"}, nil,
+			[]string{"package", "core"}, constLabels,
 		),
 		cpuPackageThrottle: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "package_throttles_total"),
 			"Number of times this CPU package has been throttled.",
-			[]string{"package"}, nil,
+			[]string{"package"}, constLabels,
 		),
 		logger: logger,
 	}

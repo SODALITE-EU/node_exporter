@@ -88,7 +88,7 @@ func (c *btrfsCollector) updateBtrfsStats(ch chan<- prometheus.Metric, s *btrfs.
 			prometheus.BuildFQName(namespace, subsystem, m.name),
 			m.desc,
 			labels,
-			nil,
+			constLabels,
 		)
 
 		labelValues := []string{s.UUID}

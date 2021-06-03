@@ -176,7 +176,7 @@ func pushPowerSupplyMetric(ch chan<- prometheus.Metric, subsystem string, name s
 		prometheus.BuildFQName(namespace, subsystem, name),
 		fmt.Sprintf("%s value of /sys/class/power_supply/<power_supply>.", name),
 		[]string{"power_supply"},
-		nil,
+		constLabels,
 	)
 
 	ch <- prometheus.MustNewConstMetric(fieldDesc, valueType, value, powerSupplyName)

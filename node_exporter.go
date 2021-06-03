@@ -45,14 +45,18 @@ type handler struct {
 	includeExporterMetrics  bool
 	maxRequests             int
 	logger                  log.Logger
+	nameLabel               string
+	groupLabel              string
 }
 
-func newHandler(includeExporterMetrics bool, maxRequests int, logger log.Logger) *handler {
+func newHandler(includeExporterMetrics bool, maxRequests int, logger log.Logger, nameLabel, groupLabel string) *handler {
 	h := &handler{
 		exporterMetricsRegistry: prometheus.NewRegistry(),
 		includeExporterMetrics:  includeExporterMetrics,
 		maxRequests:             maxRequests,
 		logger:                  logger,
+		nameLabel:               nameLabel,
+		groupLabel:              groupLabel,
 	}
 	if h.includeExporterMetrics {
 		h.exporterMetricsRegistry.MustRegister(
@@ -95,7 +99,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // (in which case it will log all the collectors enabled via command-line
 // flags).
 func (h *handler) innerHandler(filters ...string) (http.Handler, error) {
-	nc, err := collector.NewNodeCollector(h.logger, filters...)
+	nc, err := collector.NewNodeCollector(h.logger, h.nameLabel, h.groupLabel, filters...)
 	if err != nil {
 		return nil, fmt.Errorf("couldn't create collector: %s", err)
 	}
@@ -163,6 +167,14 @@ func main() {
 			"web.config",
 			"[EXPERIMENTAL] Path to config yaml file that can enable TLS or authentication.",
 		).Default("").String()
+		nameLabel = kingpin.Flag(
+			"collector.instance-name-label",
+			"Instance name label.",
+		).Default("no_name").String()
+		groupLabel = kingpin.Flag(
+			"collector.group-name-label",
+			"Name of the group this node is part of.",
+		).Default("no_group").String()
 	)
 
 	promlogConfig := &promlog.Config{}
@@ -182,7 +194,7 @@ func main() {
 		level.Warn(logger).Log("msg", "Node Exporter is running as root user. This exporter is designed to run as unpriviledged user, root is not required.")
 	}
 
-	http.Handle(*metricsPath, newHandler(!*disableExporterMetrics, *maxRequests, logger))
+	http.Handle(*metricsPath, newHandler(!*disableExporterMetrics, *maxRequests, logger, *nameLabel, *groupLabel))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`<html>
 			<head><title>Node Exporter</title></head>

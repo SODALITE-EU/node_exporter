@@ -54,7 +54,7 @@ func (c *bootTimeCollector) Update(ch chan<- prometheus.Metric) error {
 		prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", c.name),
 			c.description,
-			nil, nil,
+			nil, constLabels,
 		), prometheus.GaugeValue, v)
 
 	return nil

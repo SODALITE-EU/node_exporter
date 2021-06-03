@@ -343,7 +343,7 @@ func (c *bcacheCollector) updateBcacheStats(ch chan<- prometheus.Metric, s *bcac
 			prometheus.BuildFQName(namespace, subsystem, m.name),
 			m.desc,
 			labels,
-			nil,
+			constLabels,
 		)
 
 		labelValues := []string{s.Name}

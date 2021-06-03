@@ -54,7 +54,7 @@ func NewNFSdCollector(logger log.Logger) (Collector, error) {
 		requestsDesc: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "requests_total"),
 			"Total number NFSd Requests by method and protocol.",
-			[]string{"proto", "method"}, nil,
+			[]string{"proto", "method"}, constLabels,
 		),
 		logger: logger,
 	}, nil
@@ -92,7 +92,7 @@ func (c *nfsdCollector) updateNFSdReplyCacheStats(ch chan<- prometheus.Metric, s
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "reply_cache_hits_total"),
 			"Total number of NFSd Reply Cache hits (client lost server response).",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.Hits))
@@ -101,7 +101,7 @@ func (c *nfsdCollector) updateNFSdReplyCacheStats(ch chan<- prometheus.Metric, s
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "reply_cache_misses_total"),
 			"Total number of NFSd Reply Cache an operation that requires caching (idempotent).",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.Misses))
@@ -110,7 +110,7 @@ func (c *nfsdCollector) updateNFSdReplyCacheStats(ch chan<- prometheus.Metric, s
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "reply_cache_nocache_total"),
 			"Total number of NFSd Reply Cache non-idempotent operations (rename/delete/…).",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.NoCache))
@@ -123,7 +123,7 @@ func (c *nfsdCollector) updateNFSdFileHandlesStats(ch chan<- prometheus.Metric, 
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "file_handles_stale_total"),
 			"Total number of NFSd stale file handles",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.Stale))
@@ -137,7 +137,7 @@ func (c *nfsdCollector) updateNFSdInputOutputStats(ch chan<- prometheus.Metric, 
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "disk_bytes_read_total"),
 			"Total NFSd bytes read.",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.Read))
@@ -146,7 +146,7 @@ func (c *nfsdCollector) updateNFSdInputOutputStats(ch chan<- prometheus.Metric, 
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "disk_bytes_written_total"),
 			"Total NFSd bytes written.",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.Write))
@@ -159,7 +159,7 @@ func (c *nfsdCollector) updateNFSdThreadsStats(ch chan<- prometheus.Metric, s *n
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "server_threads"),
 			"Total number of NFSd kernel threads that are running.",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.GaugeValue,
 		float64(s.Threads))
@@ -172,7 +172,7 @@ func (c *nfsdCollector) updateNFSdReadAheadCacheStats(ch chan<- prometheus.Metri
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "read_ahead_cache_size_blocks"),
 			"How large the read ahead cache is in blocks.",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.GaugeValue,
 		float64(s.CacheSize))
@@ -181,7 +181,7 @@ func (c *nfsdCollector) updateNFSdReadAheadCacheStats(ch chan<- prometheus.Metri
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "read_ahead_cache_not_found_total"),
 			"Total number of NFSd read ahead cache not found.",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.NotFound))
@@ -193,7 +193,7 @@ func (c *nfsdCollector) updateNFSdNetworkStats(ch chan<- prometheus.Metric, s *n
 		prometheus.BuildFQName(namespace, nfsdSubsystem, "packets_total"),
 		"Total NFSd network packets (sent+received) by protocol type.",
 		[]string{"proto"},
-		nil,
+		constLabels,
 	)
 	ch <- prometheus.MustNewConstMetric(
 		packetDesc,
@@ -208,7 +208,7 @@ func (c *nfsdCollector) updateNFSdNetworkStats(ch chan<- prometheus.Metric, s *n
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "connections_total"),
 			"Total number of NFSd TCP connections.",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.TCPConnect))
@@ -239,7 +239,7 @@ func (c *nfsdCollector) updateNFSdServerRPCStats(ch chan<- prometheus.Metric, s 
 			prometheus.BuildFQName(namespace, nfsdSubsystem, "server_rpcs_total"),
 			"Total number of NFSd RPCs.",
 			nil,
-			nil,
+			constLabels,
 		),
 		prometheus.CounterValue,
 		float64(s.RPCCount))

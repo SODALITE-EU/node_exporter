@@ -41,7 +41,7 @@ func NewARPCollector(logger log.Logger) (Collector, error) {
 		entries: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "arp", "entries"),
 			"ARP entries by device",
-			[]string{"device"}, nil,
+			[]string{"device"}, constLabels,
 		),
 		logger: logger,
 	}, nil

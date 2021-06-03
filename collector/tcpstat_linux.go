@@ -73,7 +73,7 @@ func NewTCPStatCollector(logger log.Logger) (Collector, error) {
 		desc: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "tcp", "connection_states"),
 			"Number of connection states.",
-			[]string{"state"}, nil,
+			[]string{"state"}, constLabels,
 		), prometheus.GaugeValue},
 		logger: logger,
 	}, nil
