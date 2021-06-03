@@ -17,9 +17,10 @@ package collector
 
 import (
 	"fmt"
-	"golang.org/x/sys/unix"
 	"net"
 	"strconv"
+
+	"golang.org/x/sys/unix"
 
 	"github.com/go-kit/kit/log"
 	"github.com/jsimonetti/rtnetlink"
@@ -42,11 +43,11 @@ func NewNetworkRouteCollector(logger log.Logger) (Collector, error) {
 
 	routeInfoDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "route_info"),
-		"network routing table information", []string{"device", "src", "dest", "gw", "priority", "proto", "weight"}, constlabels,
+		"network routing table information", []string{"device", "src", "dest", "gw", "priority", "proto", "weight"}, constLabels,
 	)
 	routesDesc := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, subsystem, "routes"),
-		"network routes by interface", []string{"device"}, constlabels,
+		"network routes by interface", []string{"device"}, constLabels,
 	)
 
 	return &networkRouteCollector{

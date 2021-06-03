@@ -493,14 +493,14 @@ func NewMountStatsCollector(logger log.Logger) (Collector, error) {
 			prometheus.BuildFQName(namespace, subsystem, "event_pnfs_read_total"),
 			"Number of NFS v4.1+ pNFS reads.",
 			labels,
-			constlabels,
+			constLabels,
 		),
 
 		NFSEventPNFSWriteTotal: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, subsystem, "event_pnfs_write_total"),
 			"Number of NFS v4.1+ pNFS writes.",
 			labels,
-			constlabels,
+			constLabels,
 		),
 
 		proc:   proc,

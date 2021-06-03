@@ -197,7 +197,7 @@ func IsNoDataError(err error) bool {
 	return err == ErrNoData
 }
 
-func joinLabels(map1 prometheus.Labels, map2 prometheus.Labels) prometheus.Labels {
+func JoinLabels(map1 prometheus.Labels, map2 prometheus.Labels) prometheus.Labels {
 	map3 := make(prometheus.Labels)
 	for key, value := range map1 {
 		map3[key] = value

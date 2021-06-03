@@ -44,31 +44,31 @@ var (
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		joinLabels(prometheus.Labels{"state": "active"}, constLabels),
+		JoinLabels(prometheus.Labels{"state": "active"}, constLabels),
 	)
 	inActiveDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		joinLabels(prometheus.Labels{"state": "inactive"}, constLabels),
+		JoinLabels(prometheus.Labels{"state": "inactive"}, constLabels),
 	)
 	recoveringDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		joinLabels(prometheus.Labels{"state": "recovering"}, constLabels),
+		JoinLabels(prometheus.Labels{"state": "recovering"}, constLabels),
 	)
 	resyncDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		joinLabels(prometheus.Labels{"state": "resync"}, constLabels),
+		JoinLabels(prometheus.Labels{"state": "resync"}, constLabels),
 	)
 	checkDesc = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
-		joinLabels(prometheus.Labels{"state": "check"}, constLabels),
+		JoinLabels(prometheus.Labels{"state": "check"}, constLabels),
 	)
 
 	disksDesc = prometheus.NewDesc(

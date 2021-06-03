@@ -76,7 +76,7 @@ func (c *netClassCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.BuildFQName(namespace, c.subsystem, "up"),
 			"Value is 1 if operstate is 'up', 0 otherwise.",
 			[]string{"device"},
-			constlabels,
+			constLabels,
 		)
 		upValue := 0.0
 		if ifaceInfo.OperState == "up" {
@@ -89,7 +89,7 @@ func (c *netClassCollector) Update(ch chan<- prometheus.Metric) error {
 			prometheus.BuildFQName(namespace, c.subsystem, "info"),
 			"Non-numeric data from /sys/class/net/<iface>, value is always 1.",
 			[]string{"device", "address", "broadcast", "duplex", "operstate", "ifalias"},
-			constlabels,
+			constLabels,
 		)
 		infoValue := 1.0
 
@@ -176,7 +176,7 @@ func pushMetric(ch chan<- prometheus.Metric, subsystem string, name string, valu
 		prometheus.BuildFQName(namespace, subsystem, name),
 		fmt.Sprintf("%s value of /sys/class/net/<iface>.", name),
 		[]string{"device"},
-		constlabels,
+		constLabels,
 	)
 
 	ch <- prometheus.MustNewConstMetric(fieldDesc, valueType, float64(value), ifaceName)
