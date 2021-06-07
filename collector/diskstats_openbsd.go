@@ -45,6 +45,36 @@ func init() {
 
 // NewDiskstatsCollector returns a new Collector exposing disk device stats.
 func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
+	readsCompletedDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, diskSubsystem, "reads_completed_total"),
+		"The total number of reads completed successfully.",
+		diskLabelNames, constLabels,
+	)
+
+	readBytesDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, diskSubsystem, "read_bytes_total"),
+		"The total number of bytes read successfully.",
+		diskLabelNames, constLabels,
+	)
+
+	writesCompletedDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, diskSubsystem, "writes_completed_total"),
+		"The total number of writes completed successfully.",
+		diskLabelNames, constLabels,
+	)
+
+	writtenBytesDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, diskSubsystem, "written_bytes_total"),
+		"The total number of bytes written successfully.",
+		diskLabelNames, constLabels,
+	)
+
+	ioTimeSecondsDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, diskSubsystem, "io_time_seconds_total"),
+		"Total seconds spent doing I/Os.",
+		diskLabelNames, constLabels,
+	)
+
 	return &diskstatsCollector{
 		rxfer:  typedDesc{readsCompletedDesc, prometheus.CounterValue},
 		rbytes: typedDesc{readBytesDesc, prometheus.CounterValue},

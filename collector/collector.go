@@ -31,21 +31,6 @@ const namespace = "node"
 
 var constLabels = make(prometheus.Labels)
 
-var (
-	scrapeDurationDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "scrape", "collector_duration_seconds"),
-		"node_exporter: Duration of a collector scrape.",
-		[]string{"collector"},
-		constLabels,
-	)
-	scrapeSuccessDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "scrape", "collector_success"),
-		"node_exporter: Whether a collector succeeded.",
-		[]string{"collector"},
-		constLabels,
-	)
-)
-
 const (
 	defaultEnabled  = true
 	defaultDisabled = false
@@ -77,8 +62,10 @@ func registerCollector(collector string, isDefaultEnabled bool, factory func(log
 
 // NodeCollector implements the prometheus.Collector interface.
 type NodeCollector struct {
-	Collectors map[string]Collector
-	logger     log.Logger
+	Collectors         map[string]Collector
+	logger             log.Logger
+	scrapeDurationDesc *prometheus.Desc
+	scrapeSuccessDesc  *prometheus.Desc
 }
 
 // DisableDefaultCollectors sets the collector state to false for all collectors which
@@ -132,13 +119,25 @@ func NewNodeCollector(logger log.Logger, nameLabel, groupLabel string, filters .
 			}
 		}
 	}
-	return &NodeCollector{Collectors: collectors, logger: logger}, nil
+	scrapeDurationDesc := prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "scrape", "collector_duration_seconds"),
+		"node_exporter: Duration of a collector scrape.",
+		[]string{"collector"},
+		constLabels,
+	)
+	scrapeSuccessDesc := prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "scrape", "collector_success"),
+		"node_exporter: Whether a collector succeeded.",
+		[]string{"collector"},
+		constLabels,
+	)
+	return &NodeCollector{Collectors: collectors, logger: logger, scrapeDurationDesc: scrapeDurationDesc, scrapeSuccessDesc: scrapeSuccessDesc}, nil
 }
 
 // Describe implements the prometheus.Collector interface.
 func (n NodeCollector) Describe(ch chan<- *prometheus.Desc) {
-	ch <- scrapeDurationDesc
-	ch <- scrapeSuccessDesc
+	ch <- n.scrapeDurationDesc
+	ch <- n.scrapeSuccessDesc
 }
 
 // Collect implements the prometheus.Collector interface.
@@ -147,14 +146,14 @@ func (n NodeCollector) Collect(ch chan<- prometheus.Metric) {
 	wg.Add(len(n.Collectors))
 	for name, c := range n.Collectors {
 		go func(name string, c Collector) {
-			execute(name, c, ch, n.logger)
+			execute(name, c, ch, n.logger, n)
 			wg.Done()
 		}(name, c)
 	}
 	wg.Wait()
 }
 
-func execute(name string, c Collector, ch chan<- prometheus.Metric, logger log.Logger) {
+func execute(name string, c Collector, ch chan<- prometheus.Metric, logger log.Logger, n NodeCollector) {
 	begin := time.Now()
 	err := c.Update(ch)
 	duration := time.Since(begin)
@@ -171,8 +170,8 @@ func execute(name string, c Collector, ch chan<- prometheus.Metric, logger log.L
 		level.Debug(logger).Log("msg", "collector succeeded", "name", name, "duration_seconds", duration.Seconds())
 		success = 1
 	}
-	ch <- prometheus.MustNewConstMetric(scrapeDurationDesc, prometheus.GaugeValue, duration.Seconds(), name)
-	ch <- prometheus.MustNewConstMetric(scrapeSuccessDesc, prometheus.GaugeValue, success, name)
+	ch <- prometheus.MustNewConstMetric(n.scrapeDurationDesc, prometheus.GaugeValue, duration.Seconds(), name)
+	ch <- prometheus.MustNewConstMetric(n.scrapeSuccessDesc, prometheus.GaugeValue, success, name)
 }
 
 // Collector is the interface a collector has to implement.

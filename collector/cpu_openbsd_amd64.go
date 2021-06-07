@@ -52,6 +52,11 @@ func init() {
 }
 
 func NewCPUCollector(logger log.Logger) (Collector, error) {
+	nodeCPUSecondsDesc := prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "seconds_total"),
+		"Seconds the CPUs spent in each mode.",
+		[]string{"cpu", "mode"}, constLabels,
+	)
 	return &cpuCollector{
 		cpu:    typedDesc{nodeCPUSecondsDesc, prometheus.CounterValue},
 		logger: logger,

@@ -86,6 +86,11 @@ func init() {
 
 // NewStatCollector returns a new Collector exposing CPU stats.
 func NewStatCollector(logger log.Logger) (Collector, error) {
+	nodeCPUSecondsDesc := prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "seconds_total"),
+		"Seconds the CPUs spent in each mode.",
+		[]string{"cpu", "mode"}, constLabels,
+	)
 	return &statCollector{
 		cpu:    nodeCPUSecondsDesc,
 		logger: logger,

@@ -62,6 +62,11 @@ func NewCPUCollector(logger log.Logger) (Collector, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open procfs: %w", err)
 	}
+	nodeCPUSecondsDesc := prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "seconds_total"),
+		"Seconds the CPUs spent in each mode.",
+		[]string{"cpu", "mode"}, constLabels,
+	)
 	c := &cpuCollector{
 		fs:  fs,
 		cpu: nodeCPUSecondsDesc,

@@ -49,7 +49,7 @@ func NewUDPqueuesCollector(logger log.Logger) (Collector, error) {
 		desc: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "udp", "queues"),
 			"Number of allocated memory in the kernel for UDP datagrams in bytes.",
-			[]string{"queue", "ip"}, nil,
+			[]string{"queue", "ip"}, constLabels,
 		),
 		logger: logger,
 	}, nil

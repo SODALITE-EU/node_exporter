@@ -28,42 +28,44 @@ import (
 
 const nsPerSec = 1e9
 
-var (
-	runningSecondsTotal = prometheus.NewDesc(
+// NewSchedstatCollector returns a new Collector exposing task scheduler statistics
+func NewSchedstatCollector(logger log.Logger) (Collector, error) {
+	fs, err := procfs.NewFS(*procPath)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to open procfs: %w", err)
+	}
+
+	runningSecondsTotal := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "schedstat", "running_seconds_total"),
 		"Number of seconds CPU spent running a process.",
 		[]string{"cpu"},
 		constLabels,
 	)
 
-	waitingSecondsTotal = prometheus.NewDesc(
+	waitingSecondsTotal := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "schedstat", "waiting_seconds_total"),
 		"Number of seconds spent by processing waiting for this CPU.",
 		[]string{"cpu"},
 		constLabels,
 	)
 
-	timeslicesTotal = prometheus.NewDesc(
+	timeslicesTotal := prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "schedstat", "timeslices_total"),
 		"Number of timeslices executed by CPU.",
 		[]string{"cpu"},
 		constLabels,
 	)
-)
 
-// NewSchedstatCollector returns a new Collector exposing task scheduler statistics
-func NewSchedstatCollector(logger log.Logger) (Collector, error) {
-	fs, err := procfs.NewFS(*procPath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open procfs: %w", err)
-	}
-
-	return &schedstatCollector{fs, logger}, nil
+	return &schedstatCollector{fs, logger, runningSecondsTotal, waitingSecondsTotal, timeslicesTotal}, nil
 }
 
 type schedstatCollector struct {
-	fs     procfs.FS
-	logger log.Logger
+	fs                  procfs.FS
+	logger              log.Logger
+	runningSecondsTotal *prometheus.Desc
+	waitingSecondsTotal *prometheus.Desc
+	timeslicesTotal     *prometheus.Desc
 }
 
 func init() {
@@ -82,21 +84,21 @@ func (c *schedstatCollector) Update(ch chan<- prometheus.Metric) error {
 
 	for _, cpu := range stats.CPUs {
 		ch <- prometheus.MustNewConstMetric(
-			runningSecondsTotal,
+			c.runningSecondsTotal,
 			prometheus.CounterValue,
 			float64(cpu.RunningNanoseconds)/nsPerSec,
 			cpu.CPUNum,
 		)
 
 		ch <- prometheus.MustNewConstMetric(
-			waitingSecondsTotal,
+			c.waitingSecondsTotal,
 			prometheus.CounterValue,
 			float64(cpu.WaitingNanoseconds)/nsPerSec,
 			cpu.CPUNum,
 		)
 
 		ch <- prometheus.MustNewConstMetric(
-			timeslicesTotal,
+			c.timeslicesTotal,
 			prometheus.CounterValue,
 			float64(cpu.RunTimeslices),
 			cpu.CPUNum,
