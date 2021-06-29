@@ -45,18 +45,16 @@ type handler struct {
 	includeExporterMetrics  bool
 	maxRequests             int
 	logger                  log.Logger
-	nameLabel               string
-	groupLabel              string
+	constLabels             map[string]string
 }
 
-func newHandler(includeExporterMetrics bool, maxRequests int, logger log.Logger, nameLabel, groupLabel string) *handler {
+func newHandler(includeExporterMetrics bool, maxRequests int, logger log.Logger, constLabels map[string]string) *handler {
 	h := &handler{
 		exporterMetricsRegistry: prometheus.NewRegistry(),
 		includeExporterMetrics:  includeExporterMetrics,
 		maxRequests:             maxRequests,
 		logger:                  logger,
-		nameLabel:               nameLabel,
-		groupLabel:              groupLabel,
+		constLabels:             constLabels,
 	}
 	if h.includeExporterMetrics {
 		h.exporterMetricsRegistry.MustRegister(
@@ -99,7 +97,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // (in which case it will log all the collectors enabled via command-line
 // flags).
 func (h *handler) innerHandler(filters ...string) (http.Handler, error) {
-	nc, err := collector.NewNodeCollector(h.logger, h.nameLabel, h.groupLabel, filters...)
+	nc, err := collector.NewNodeCollector(h.logger, h.constLabels, filters...)
 	if err != nil {
 		return nil, fmt.Errorf("couldn't create collector: %s", err)
 	}
@@ -168,15 +166,23 @@ func main() {
 			"[EXPERIMENTAL] Path to config yaml file that can enable TLS or authentication.",
 		).Default("").String()
 		nameLabel = kingpin.Flag(
-			"collector.instance-name-label",
+			"instance-name-label",
 			"Instance name label.",
 		).Default("no_name").String()
 		groupLabel = kingpin.Flag(
-			"collector.group-name-label",
+			"group-name-label",
 			"Name of the group this node is part of.",
 		).Default("no_group").String()
+		idLabel = kingpin.Flag(
+			"deployment-id-label",
+			"Deployment ID this node is part of.",
+		).Default("no_group").String()
 	)
-
+	constLabels := map[string]string{
+		"instance_name": *nameLabel,
+		"group_name":    *groupLabel,
+		"deployment_id": *idLabel,
+	}
 	promlogConfig := &promlog.Config{}
 	flag.AddFlags(kingpin.CommandLine, promlogConfig)
 	kingpin.Version(version.Print("node_exporter"))
@@ -194,7 +200,7 @@ func main() {
 		level.Warn(logger).Log("msg", "Node Exporter is running as root user. This exporter is designed to run as unpriviledged user, root is not required.")
 	}
 
-	http.Handle(*metricsPath, newHandler(!*disableExporterMetrics, *maxRequests, logger, *nameLabel, *groupLabel))
+	http.Handle(*metricsPath, newHandler(!*disableExporterMetrics, *maxRequests, logger, constLabels))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`<html>
 			<head><title>Node Exporter</title></head>

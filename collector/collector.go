@@ -91,10 +91,7 @@ func collectorFlagAction(collector string) func(ctx *kingpin.ParseContext) error
 }
 
 // NewNodeCollector creates a new NodeCollector.
-func NewNodeCollector(logger log.Logger, nameLabel, groupLabel string, filters ...string) (*NodeCollector, error) {
-
-	constLabels["instance_name"] = nameLabel
-	constLabels["group_name"] = groupLabel
+func NewNodeCollector(logger log.Logger, constLabels map[string]string, filters ...string) (*NodeCollector, error) {
 
 	f := make(map[string]bool)
 	for _, filter := range filters {
