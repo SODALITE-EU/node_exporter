@@ -178,11 +178,6 @@ func main() {
 			"Monitoring ID this node is part of.",
 		).Default("no_group").String()
 	)
-	constLabels := map[string]string{
-		"instance_name": *nameLabel,
-		"group_name":    *groupLabel,
-		"monitoring_id": *idLabel,
-	}
 	promlogConfig := &promlog.Config{}
 	flag.AddFlags(kingpin.CommandLine, promlogConfig)
 	kingpin.Version(version.Print("node_exporter"))
@@ -190,7 +185,11 @@ func main() {
 	kingpin.HelpFlag.Short('h')
 	kingpin.Parse()
 	logger := promlog.New(promlogConfig)
-
+	constLabels := map[string]string{
+		"instance_name": *nameLabel,
+		"group_name":    *groupLabel,
+		"monitoring_id": *idLabel,
+	}
 	if *disableDefaultCollectors {
 		collector.DisableDefaultCollectors()
 	}

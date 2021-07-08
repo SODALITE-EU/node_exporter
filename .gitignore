@@ -36,3 +36,4 @@ dependencies-stamp
 collector/fixtures/sys/
 
 /vendor
+.vscode/launch.json
