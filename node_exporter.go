@@ -174,14 +174,14 @@ func main() {
 			"Name of the group this node is part of.",
 		).Default("no_group").String()
 		idLabel = kingpin.Flag(
-			"deployment-id-label",
-			"Deployment ID this node is part of.",
+			"monitoring-id-label",
+			"Monitoring ID this node is part of.",
 		).Default("no_group").String()
 	)
 	constLabels := map[string]string{
 		"instance_name": *nameLabel,
 		"group_name":    *groupLabel,
-		"deployment_id": *idLabel,
+		"monitoring_id": *idLabel,
 	}
 	promlogConfig := &promlog.Config{}
 	flag.AddFlags(kingpin.CommandLine, promlogConfig)
