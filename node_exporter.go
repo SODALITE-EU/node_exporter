@@ -179,9 +179,9 @@ func main() {
 		).Default("no_group").String()
 	)
 	constLabels := map[string]string{
-		"instance_name": *nameLabel,
-		"group_name":    *groupLabel,
-		"monitoring_id": *idLabel,
+		"instance_name":    *nameLabel,
+		"deployment_label": *groupLabel,
+		"monitoring_id":    *idLabel,
 	}
 	promlogConfig := &promlog.Config{}
 	flag.AddFlags(kingpin.CommandLine, promlogConfig)
