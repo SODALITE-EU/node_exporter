@@ -169,9 +169,9 @@ func main() {
 			"instance-name-label",
 			"Instance name label.",
 		).Default("no_name").String()
-		groupLabel = kingpin.Flag(
-			"group-name-label",
-			"Name of the group this node is part of.",
+		deploymentLabel = kingpin.Flag(
+			"deployment-label",
+			"Name of the deployment this node is part of.",
 		).Default("no_group").String()
 		idLabel = kingpin.Flag(
 			"monitoring-id-label",
@@ -187,7 +187,7 @@ func main() {
 	logger := promlog.New(promlogConfig)
 	constLabels := map[string]string{
 		"instance_name":    *nameLabel,
-		"deployment_label": *groupLabel,
+		"deployment_label": *deploymentLabel,
 		"monitoring_id":    *idLabel,
 	}
 	if *disableDefaultCollectors {
